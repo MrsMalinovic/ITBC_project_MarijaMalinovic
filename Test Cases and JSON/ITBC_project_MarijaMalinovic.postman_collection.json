@@ -1,0 +1,359 @@
+{
+	"info": {
+		"_postman_id": "546a266e-8ff7-409b-bceb-e60d7fa15759",
+		"name": "ITBC_project_MarijaMalinovic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26687118",
+		"_collection_link": "https://dark-comet-471637.postman.co/workspace/Team-Workspace~7ce32d2e-87fc-4dc4-8445-a416bb7f6387/collection/26687118-546a266e-8ff7-409b-bceb-e60d7fa15759?action=share&creator=26687118&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "User",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"UserName\", pm.variables.replaceIn('{{$randomUserName}}'));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Verify user name\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.username).to.eql(pm.collectionVariables.get('UserName'));   \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"{{UserName}}\",\r\n  \"password\": \"{{Password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}/Account/v1/User",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"Account",
+								"v1",
+								"User"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Token",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"status\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Success\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"{{UserName}}\",\r\n  \"password\": \"{{Password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}/Account/v1/GenerateToken",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"Account",
+								"v1",
+								"GenerateToken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authorized",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Test is user authorized\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"true\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"{{UserName}}\",\r\n  \"password\": \"{{Password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}/Account/v1/Authorized",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"Account",
+								"v1",
+								"Authorized"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUser",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Book Store",
+			"item": [
+				{
+					"name": "Books",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify publisher\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"isbn\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/BookStore/v1/Books",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"BookStore",
+								"v1",
+								"Books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify that response contains isbn\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"isbn\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/BookStore/v1/Book?ISBN=9781449325862",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"BookStore",
+								"v1",
+								"Book"
+							],
+							"query": [
+								{
+									"key": "ISBN",
+									"value": "9781449325862"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Books",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/BookStore/v1/Books?UserId={{UserId}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"BookStore",
+								"v1",
+								"Books"
+							],
+							"query": [
+								{
+									"key": "UserId",
+									"value": "{{UserId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{Token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Url",
+			"value": "https://demoqa.com",
+			"type": "string"
+		},
+		{
+			"key": "Password",
+			"value": "Abc.12345!",
+			"type": "string"
+		},
+		{
+			"key": "UserName",
+			"value": ""
+		},
+		{
+			"key": "UserId",
+			"value": "316991ec-a27f-4ded-9513-bdd4d3c43c24",
+			"type": "string"
+		},
+		{
+			"key": "Token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IkxvbmllNDQiLCJwYXNzd29yZCI6IkFiYy4xMjM0NSEiLCJpYXQiOjE2ODc0NTE4OTd9.MS5toonmNtY1sDRdz_ZlyrGlstyYjHAdlZAPWlHCYOc",
+			"type": "string"
+		},
+		{
+			"key": "ISBN",
+			"value": "9781449325862",
+			"type": "string"
+		}
+	]
+}
